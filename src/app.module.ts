@@ -10,11 +10,6 @@ const handleAuth = ({ req }) => {
       return {
         authorization: req.headers.authorization || req.headers.Authorization,
       };
-      // return {
-      //   userId: decoded.userId,
-      //   permissions: decoded.permissions,
-      //   authorization: `${req.headers.authorization}`,
-      // };
     }
   } catch (err) {
     throw new UnauthorizedException(
@@ -37,8 +32,9 @@ const handleAuth = ({ req }) => {
       gateway: {
         supergraphSdl: new IntrospectAndCompose({
           subgraphs: [
+            // todo: define paths in config
             { name: 'users', url: 'http://localhost:3002/graphql' },
-            // { name: 'posts', url: 'http://post-service/graphql' },
+            { name: 'posts', url: 'http://localhost:3003/graphql' },
           ],
         }),
         buildService: ({ name, url }) => {
